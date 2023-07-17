@@ -1,7 +1,7 @@
 package ir.tinyLink.service.contract;
 
-import ir.tinyLink.model.srv.ApplicationSrv;
-import ir.tinyLink.model.vo.RegisterRequest;
+import ir.tinyLink.model.dto.ApplicationSrv;
+import ir.tinyLink.model.dto.RegisterRequest;
 
 import java.security.InvalidAlgorithmParameterException;
 

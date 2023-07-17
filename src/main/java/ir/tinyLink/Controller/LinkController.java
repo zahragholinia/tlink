@@ -5,21 +5,21 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import ir.tinyLink.model.srv.LinkSrv;
-import ir.tinyLink.model.vo.RestResponse;
+import ir.tinyLink.model.dto.LinkSrv;
+import ir.tinyLink.model.dto.RestResponse;
 import ir.tinyLink.service.contract.LinkService;
+import ir.tinyLink.validator.ValidUrl;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.net.MalformedURLException;
 
 /**
  * Configuration for hibernate
@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/link")
 public class LinkController {
 
@@ -40,16 +41,14 @@ public class LinkController {
     @Operation(summary = "short long link.")
     @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = "application/json"))
-    @Parameter(in = ParameterIn.PATH, name = "longLink", description = "short long link.")
-    public ResponseEntity<?> register(
-            @Valid  @RequestBody String longLink) throws MalformedURLException {
+    @Parameter(in = ParameterIn.QUERY, name = "longLink", description = "short long link.")
+    public ResponseEntity<?> insert(@Valid @ValidUrl String longLink) {
 
         LinkSrv linkSrv = linkService.insert(longLink);
         return ResponseEntity.ok(
-                RestResponse.Builder()
-                        .count(1L)
+                RestResponse.builder()
                         .result(linkSrv)
-                        .status(HttpStatus.OK)
+                        .status(HttpStatus.OK.value())
                         .build());
     }
 
@@ -62,20 +61,20 @@ public class LinkController {
 
         Page<LinkSrv> linkVo = linkService.list(page, size);
         return ResponseEntity.ok(
-                 RestResponse.Builder()
-                         .count(linkVo.getTotalElements())
-                         .result(linkVo.getContent())
-                         .status(HttpStatus.OK)
-                         .build());
+                RestResponse.builder()
+                        .count(linkVo.getTotalElements())
+                        .result(linkVo.getContent())
+                        .status(HttpStatus.OK.value())
+                        .build());
     }
 
-    @GetMapping(value = "/tiny")
-    @Operation(summary = "get  longlink.")
+    @GetMapping(value = "/redirect")
+    @Operation(summary = "get  tinyLink.")
     @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = "application/json"))
-    public RedirectView list(@Valid @URL String shortLink) throws MalformedURLException {
+    public RedirectView list(@Valid @ValidUrl String tinyLink) {
 
-        LinkSrv linkVo = linkService.get(shortLink);
+        LinkSrv linkVo = linkService.get(tinyLink);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(linkVo.getLongLink());
 
@@ -86,31 +85,28 @@ public class LinkController {
     @Operation(summary = "get view of link.")
     @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = "application/json"))
-    public ResponseEntity<?> view(@Valid @URL String shortLink) throws MalformedURLException {
+    public ResponseEntity<?> view(@Valid @ValidUrl String tinyLink) {
 
-        Integer linkVo = linkService.view(shortLink);
+        Integer linkVo = linkService.view(tinyLink);
         return ResponseEntity.ok(
-                RestResponse.Builder()
-                        .count(1L)
+                RestResponse.builder()
                         .result(linkVo)
-                        .status(HttpStatus.OK)
+                        .status(HttpStatus.OK.value())
                         .build());
     }
 
-    @DeleteMapping(value = "/short/{id}")
+    @DeleteMapping(value = "/tiny")
     @Operation(summary = "delete tinyLink.")
     @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = "application/json"))
     @Parameter(in = ParameterIn.PATH, name = "longLink", description = "delete tinyLink")
-    public ResponseEntity<?> delete(
-            @PathVariable(value = "id") long id) {
+    public ResponseEntity<?> delete(@Valid @ValidUrl String tinyLink) {
 
-        linkService.delete(id);
+        linkService.delete(tinyLink);
         return ResponseEntity.ok(
-                RestResponse.Builder()
-                        .count(1L)
+                RestResponse.builder()
                         .result(true)
-                        .status(HttpStatus.OK)
+                        .status(HttpStatus.OK.value())
                         .build());
     }
 }

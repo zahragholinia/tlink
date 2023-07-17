@@ -1,4 +1,4 @@
-package ir.tinyLink.security;
+package ir.tinyLink.security.filter;
 
 import org.apache.catalina.connector.RequestFacade;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +9,6 @@ import javax.annotation.Priority;
 import javax.servlet.*;
 import java.io.IOException;
 import java.util.UUID;
-
-/**
- * Created by z.gholinia on 2020/07/21 @PodBusinessPanel.
- */
 
 @Component
 @Order(Integer.MIN_VALUE + 10)

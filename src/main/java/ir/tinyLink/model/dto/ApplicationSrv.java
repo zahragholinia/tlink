@@ -1,4 +1,4 @@
-package ir.tinyLink.model.srv;
+package ir.tinyLink.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

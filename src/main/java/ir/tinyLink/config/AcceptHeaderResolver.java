@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Mujtaba Hossaini
- * @project PodBusinessPanel
- * @created 11/03/2023 - 10:58
- * @email mujtaba.hossaini94@gmail.com
+ * Configuration for hibernate
+ *
+ * @author Zahra Gholinia
+ * @since 2023-07-12
  */
 @Configuration
 public class AcceptHeaderResolver extends AcceptHeaderLocaleResolver {

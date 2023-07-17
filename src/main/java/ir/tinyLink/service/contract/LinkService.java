@@ -1,22 +1,17 @@
 package ir.tinyLink.service.contract;
 
-import ir.tinyLink.model.entity.LinkEntity;
-import ir.tinyLink.model.srv.LinkSrv;
-import ir.tinyLink.model.vo.LinkVo;
+import ir.tinyLink.model.dto.LinkSrv;
 import org.springframework.data.domain.Page;
-
-import java.net.MalformedURLException;
-import java.util.List;
 
 public interface LinkService {
 
-     LinkSrv insert(String longLink) throws MalformedURLException;
+    LinkSrv insert(String longLink);
 
-     Page<LinkSrv> list(int page,int size);
+    Page<LinkSrv> list(int page, int size);
 
-     LinkSrv get(String shortLink) throws MalformedURLException;
+    LinkSrv get(String tinyLink);
 
-     Integer view(String shortLink) throws MalformedURLException;
+    Integer view(String tinyLink);
 
-     void delete(long id);
+    void delete(String tinyLink);
 }

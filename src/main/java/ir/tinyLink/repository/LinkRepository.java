@@ -6,9 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 @Transactional
 public interface LinkRepository extends JpaRepository<LinkEntity, Integer> {
-    Page<LinkEntity> findByUserId(long userId,final Pageable pageable);
+    Page<LinkEntity> findByUserIdOrderById(long userId, final Pageable pageable);
 
     Optional<LinkEntity> findByIdAndUserId(long id, long userId);
 
@@ -27,10 +27,13 @@ public interface LinkRepository extends JpaRepository<LinkEntity, Integer> {
 
     long countLinkEntitiesByUserId(long userId);
 
+    @Query(value = "SELECT viewcount FROM LINKS WHERE id=:id", nativeQuery = true)
+    int findViewCountById(@Param("id") long id);
+
+
     @Modifying
     @Query(value = "DELETE FROM LINKS WHERE updatedat < NOW() - INTERVAL '365 days' ", nativeQuery = true)
     void deleteLinkEntitiesByUpdatedAtIsExpired();
-
 
 
 }

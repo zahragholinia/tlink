@@ -5,9 +5,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import ir.tinyLink.model.srv.ApplicationSrv;
-import ir.tinyLink.model.vo.RegisterRequest;
-import ir.tinyLink.model.vo.RestResponse;
+import ir.tinyLink.model.dto.ApplicationSrv;
+import ir.tinyLink.model.dto.RegisterRequest;
+import ir.tinyLink.model.dto.RestResponse;
 import ir.tinyLink.service.contract.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,9 +44,9 @@ public class AuthenticationController {
 
         ApplicationSrv applicationSrv = authenticationService.register(user);
         return ResponseEntity.ok(
-                RestResponse.Builder()
+                RestResponse.builder()
                         .result(applicationSrv)
-                        .status(HttpStatus.OK)
+                        .status(HttpStatus.OK.value())
                         .build());
     }
 
@@ -60,9 +60,9 @@ public class AuthenticationController {
 
         ApplicationSrv applicationSrv = authenticationService.authenticate(user);
         return ResponseEntity.ok(
-                RestResponse.Builder()
+                RestResponse.builder()
                         .result(applicationSrv)
-                        .status(HttpStatus.OK)
+                        .status(HttpStatus.OK.value())
                         .build());
     }
 

@@ -1,16 +1,17 @@
-package ir.tinyLink.model.vo;
+package ir.tinyLink.model.dto;
 
-import ir.tinyLink.model.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
- * Created by z.gholinia on 2020/07/28 @PodBusinessPanel.
+ * Configuration for hibernate
+ *
+ * @author Zahra Gholinia
+ * @since 2023-07-12
  */
 @Getter
 @Setter

@@ -6,14 +6,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import ir.tinyLink.exception.TinyLinkGeneralException;
+import ir.tinyLink.message.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 
-/**
- * Created by z.gholinia on 2020/07/21 @PodBusinessPanel.
- */
 
 @Log4j2
 public class JsonUtil {
@@ -42,9 +42,8 @@ public class JsonUtil {
             mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             return mapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-//            log.warn("unsuccessful parsing json", e);
-//            throw new InternalServerException(e.getMessage());
-            return null;
+            log.warn("unsuccessful parsing json", e);
+            throw new TinyLinkGeneralException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessage.errorInternalServer());
         }
     }
 

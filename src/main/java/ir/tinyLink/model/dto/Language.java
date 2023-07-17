@@ -1,4 +1,4 @@
-package ir.tinyLink.message;
+package ir.tinyLink.model.dto;
 
 /**
  * Configuration for hibernate

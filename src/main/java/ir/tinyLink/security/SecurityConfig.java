@@ -1,7 +1,7 @@
 package ir.tinyLink.security;
 
+import ir.tinyLink.security.filter.JWTAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 disable()
                 .authorizeRequests()
                 .antMatchers("/auth/**")
+                .permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/link/redirect")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

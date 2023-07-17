@@ -1,6 +1,6 @@
 package ir.tinyLink.config;
 
-import ir.tinyLink.message.Language;
+import ir.tinyLink.model.dto.Language;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

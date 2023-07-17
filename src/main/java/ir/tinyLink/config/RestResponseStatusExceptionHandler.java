@@ -1,7 +1,8 @@
 package ir.tinyLink.config;
 
 import ir.tinyLink.exception.TinyLinkGeneralException;
-import ir.tinyLink.model.vo.RestResponse;
+import ir.tinyLink.message.ErrorMessage;
+import ir.tinyLink.model.dto.RestResponse;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
@@ -19,14 +20,17 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * Created by z.gholinia on 2020/07/21 @PodBusinessPanel.
+ * Configuration for hibernate
+ *
+ * @author Zahra Gholinia
+ * @since 2023-07-12
  */
 
 @Log4j2
@@ -40,35 +44,30 @@ public class RestResponseStatusExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity
                 .status(exception.getStatus().value())
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        exception.getStatus().value(),
-                        null,
-                        (String) request.getAttribute("userUri"),
-                        exception.getMessage(),
-                        (String) request.getAttribute("referenceId"),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate")))
-                ));
+                .body(RestResponse.builder()
+                        .status(exception.getStatus().value())
+                        .path((String) request.getAttribute("userUri"))
+                        .message(exception.getMessage())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate")))
+
+                        ).build());
     }
+
     @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<?> runtimeExceptionHandler(HttpServletRequest request, RuntimeException exception) {
-        log.error("RuntimeExceptionHandler", exception);
         request.setAttribute("stackTrace", ExceptionUtils.getStackTrace(exception));
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        System.out.println("======== شروع خطا پنل ====================");
-        System.out.println(exception.getMessage());
-        System.out.println(exception.getStackTrace());
-        System.out.println("======== پایان خطا پنل ====================");
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status.value(),
-                        exception.getLocalizedMessage(),
-                        (String) request.getAttribute("userUri"),
-                        exception.getMessage(),
-                        (String) request.getAttribute("referenceId"),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate")))
-                ));
+                .body(RestResponse.builder()
+                        .status(status.value())
+                        .error(exception.getLocalizedMessage())
+                        .path((String) request.getAttribute("userUri"))
+                        .message(ErrorMessage.errorInternalServer())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate")))
+
+                        ).build());
     }
 
 
@@ -78,32 +77,30 @@ public class RestResponseStatusExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status.value(),
-                        exception.getLocalizedMessage(),
-                        (String) request.getAttribute("userUri"),
-                        "مقادیر فیلدهای ورودی بررسی شود",
-                        (String) request.getAttribute("referenceId"),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate")))
-                ));
+                .body(RestResponse.builder()
+                        .status(status.value())
+                        .error(exception.getLocalizedMessage())
+                        .path((String) request.getAttribute("userUri"))
+                        .message(ErrorMessage.errorValidation())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate")))
+
+                        ).build());
     }
 
     @ExceptionHandler({ValidationException.class})
     public ResponseEntity<?> validationExceptionHandler(HttpServletRequest request, ValidationException exception) {
         int status = 400;
-        String message = exception.getMessage();
         String error = "Bad Request";
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status,
-                        error,
-                        (String) request.getAttribute("userUri"),
-                        exception.getMessage(),
-                        (String) request.getAttribute("referenceId"),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate")))
-                ));
+                .body(RestResponse.builder()
+                        .status(status)
+                        .error(error)
+                        .path((String) request.getAttribute("userUri"))
+                        .message(this.getValidationErrorMessage(exception))
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate")))
+                        ).build());
     }
 
 
@@ -129,31 +126,32 @@ public class RestResponseStatusExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status,
-                        error,
-                        (String) request.getAttribute("userUri", 0),
-                        message.toString(),
-                        (String) request.getAttribute("referenceId", 0),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate", 0)))
-                ));
+                .body(RestResponse.builder()
+                        .status(status)
+                        .error(error)
+                        .path((String) request.getAttribute("userUri", 0))
+                        .message(message.toString())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate", 0))))
+                        .build()
+
+                );
     }
 
     private ResponseEntity<Object> methodArgumentTypeMismatchExceptionHandler(WebRequest request, MethodArgumentTypeMismatchException exception) {
         int status = 400;
-        String message = String.format("خطا: لطفا ورودی با نام '%s' را از جنس '%s' وارد کنید.", exception.getName(), exception.getRequiredType().getSimpleName());
         String error = "Bad Request";
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status,
-                        error,
-                        (String) request.getAttribute("userUri", 0),
-                        message,
-                        (String) request.getAttribute("referenceId", 0),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate", 0)))
-                ));
+                .body(RestResponse.builder()
+                        .status(status)
+                        .error(error)
+                        .path((String) request.getAttribute("userUri", 0))
+                        .message(ErrorMessage.errorTypeField(exception.getName(), exception.getRequiredType().getSimpleName()))
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate", 0))))
+                        .build()
+
+                );
     }
 
 
@@ -165,23 +163,24 @@ public class RestResponseStatusExceptionHandler extends ResponseEntityExceptionH
             message.append("[");
         }
         Iterator msgs = errors.iterator();
-        message.append("خطا: مقادیر ورودی فیلد‌های زیر بررسی شود").append("\n");
+        message.append(ErrorMessage.errorValidation()).append("\n");
         while (msgs.hasNext()) {
             ObjectError error = (ObjectError) msgs.next();
-            message.append(((FieldError) error).getField()).append(" با پیغام خطا (").append(error.getDefaultMessage()).append(")\n");
+            message.append(((FieldError) error).getField()).append(error.getDefaultMessage()).append(")\n");
         }
         String error = "Bad Request";
         return ResponseEntity
                 .status(status)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        status,
-                        error,
-                        (String) request.getAttribute("userUri", 0),
-                        message.toString(),
-                        (String) request.getAttribute("referenceId", 0),
-                        new Date(Long.parseLong((String) request.getAttribute("startDate", 0)))
-                ));
+                .body(RestResponse.builder()
+                        .status(status)
+                        .error(error)
+                        .path((String) request.getAttribute("userUri", 0))
+                        .message(message.toString())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate", 0))))
+                        .build()
+
+                );
     }
 
 
@@ -200,14 +199,20 @@ public class RestResponseStatusExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity
                 .status(entity.getStatusCode())
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RestResponse<>(
-                        entity.getStatusCodeValue(),
-                        entity.getStatusCode().getReasonPhrase(),
-                        (String) request.getAttribute("userUri", 0),
-                        ex.getMessage(),
-                        (String) request.getAttribute("referenceId", 0),
-                        new Date(Long.parseLong((String) Objects.requireNonNull(request.getAttribute("startDate", 0))))
-                ));
+                .body(RestResponse.builder().status(entity.getStatusCodeValue())
+                        .error(entity.getStatusCode().getReasonPhrase())
+                        .path((String) request.getAttribute("userUri", 0))
+                        .message(ex.getMessage())
+                        .timestamp(new Date(Long.parseLong((String) request.getAttribute("startDate", 0))))
+                        .build()
+                );
+    }
+
+    private String getValidationErrorMessage(ValidationException exception) {
+        if (exception instanceof ConstraintViolationException) {
+            return ErrorMessage.errorValidation();
+        }
+        return exception.getMessage();
     }
 
 }

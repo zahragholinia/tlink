@@ -9,24 +9,16 @@ public class ErrorMessage {
         return Translator.toLocale("error.internal.server", null);
     }
 
+    public static String errorValidation() {
+        return Translator.toLocale("error.validation", null);
+    }
+
+    public static String errorTypeField(String field,String type) {
+        return Translator.toLocale("error.type.field", new Object[]{field,type});
+    }
 
     public static String errorUnauthorized() {
-        return Translator.toLocale("error.internal.server", null);
-    }
-
-    public static String errorAtProcessingRequest() {
-        return Translator.toLocale("error.process.request", null);
-    }
-
-    public static String errorResourceConflict() {
-        return Translator.toLocale("error.resource.conflict", null);
-    }
-
-    public static String unknownError() {
-        return Translator.toLocale("error.unknown", null);
-    }
-    public static String errorAtReadFile() {
-        return Translator.toLocale("error.read-file", null);
+        return Translator.toLocale("error.unauthorized", null);
     }
 
 }

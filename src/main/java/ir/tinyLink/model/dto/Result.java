@@ -1,10 +1,16 @@
-package ir.tinyLink.model.vo;
+package ir.tinyLink.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.net.HttpURLConnection;
 
+/**
+ * Configuration for hibernate
+ *
+ * @author Zahra Gholinia
+ * @since 2023-07-12
+ */
 @Data
 @AllArgsConstructor
 public class Result<T> {
@@ -30,8 +36,4 @@ public class Result<T> {
         this.message = message;
     }
 
-    public Result(int code, String message, T result, boolean error) {
-        this(code, message, result);
-        this.error = error;
-    }
 }

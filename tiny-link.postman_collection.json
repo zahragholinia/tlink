@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "6f5baf3a-5b24-49ca-934b-7148a8fd73ed",
+		"name": "tiny-link",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "authenticate user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"zahragholinia\",\r\n    \"password\":\"Zahra1376!!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/authenticate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "fa",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"zahragholinia\",\r\n    \"password\":\"Zahra1376!!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new link",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWhyYWdob2xpbmlhIiwiaWF0IjoxNjg5NTg4NDkzLCJleHAiOjE2ODk1ODk5MzN9.1xhd-S_uR2CwmfJG_05ljjko7mLZH6vpwhha2DtqAJc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "fa",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "longLink",
+							"value": "http://www.google.com/search?q=sss&sxsrf=AB5stBgGyWpJoM_zgjcnk7k4Np_lVm5h0g",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/link/tiny",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"link",
+						"tiny"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list links",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWhyYWdob2xpbmlhIiwiaWF0IjoxNjg5NTg4NDkzLCJleHAiOjE2ODk1ODk5MzN9.1xhd-S_uR2CwmfJG_05ljjko7mLZH6vpwhha2DtqAJc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "fa",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/link?page=0&size=0",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"link"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get link",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "fa",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tinyLink",
+							"value": "https://tiny.ir/2?q=sss&sxsrf=AB5stBgGyWpJoM_zgjcnk7k4Np_lVm5h0g",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/link/redirect",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"link",
+						"redirect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view link",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWhyYWdob2xpbmlhIiwiaWF0IjoxNjg5NTg0NDM3LCJleHAiOjE2ODk1ODU4Nzd9.l7dfB0dD2Dc8wYMmuRXtD5HtzsTuB0uukRT1ddxXNeI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tinyLink",
+							"value": "https://tiny.ir/1",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/link/tiny/view",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"link",
+						"tiny",
+						"view"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete link",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6YWhyYWdob2xpbmlhIiwiaWF0IjoxNjg5NTg4NDkzLCJleHAiOjE2ODk1ODk5MzN9.1xhd-S_uR2CwmfJG_05ljjko7mLZH6vpwhha2DtqAJc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tinyLink",
+							"value": "https://tiny.ir/1",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/link/tiny",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"link",
+						"tiny"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

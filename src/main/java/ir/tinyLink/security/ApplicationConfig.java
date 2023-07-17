@@ -1,15 +1,17 @@
 package ir.tinyLink.security;
 
+import ir.tinyLink.exception.TinyLinkGeneralException;
+import ir.tinyLink.message.UserMessage;
 import ir.tinyLink.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,7 +33,7 @@ public class ApplicationConfig {
         UserDetailsService userDetailsService = username -> userRepository.findByUsername(username).get();
 
         if (userDetailsService == null)
-            throw new UsernameNotFoundException("user not found");
+            throw new TinyLinkGeneralException(HttpStatus.NOT_FOUND, UserMessage.errorUserNotFound());
 
         return userDetailsService;
 

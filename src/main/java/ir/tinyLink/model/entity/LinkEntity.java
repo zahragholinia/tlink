@@ -34,7 +34,7 @@ public class LinkEntity {
     @Column(name="updatedat")
     private Date updatedAt;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id",nullable=false)
     private UserEntity user;
 
