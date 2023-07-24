@@ -1,0 +1,8 @@
+#,id,password,role,username
+1,1,$2a$10$o.4j1GQaQCflUuH7cyJkaeQF8l9jVLc1PyJA/hKjfOxKT58fzSvme,ROLE_USER,zahragholinia
+2,9,$2a$10$TWvAp05PKncSAv6HYS42WOL8X7vu1YMUCOT.koYEBAWVZ.IC8o..6,ROLE_USER,aliForo
+3,11,$2a$10$ODvQkbQoOBvjgJyGArrgJ.CXMWEDoPbC2CLE5jbYMZIpr5DhqMBga,ROLE_USER,nilooFarMo
+4,12,$2a$10$nALuPkP2pkwfV1r5ih5RnOUEv6bno.WIEgfhqcX.I57qc5eF3seGi,ROLE_USER,nazanin
+5,13,$2a$10$bNeMOcXHMgvkarXkJd/ejelNrqiOavECmQjp4zgWusNyo00Iy2r5S,ROLE_USER,mojtaba
+6,14,$2a$10$8mxcLE4tXznOd5uJKpdMFuoXhwVckZOzC2ebXqJ2Nq7HQvgmJ1IDW,ROLE_USER,rezaTavakoli
+7,15,$2a$10$iDYxGGaENY4lXBoCAXagaOVG6Evj8wkZRMP90232.AtRmhHd2N1Wu,ROLE_USER,Hashemi

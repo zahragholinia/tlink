@@ -1,0 +1,17 @@
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (3, 'www.google.com/search', '2023-07-17 13:11:29.713000', 0, 1);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (4, 'www.google.com/search', '2023-07-17 13:12:31.087000', 0, 1);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (5, 'www.google.com/search', '2023-07-17 14:42:09.370000', 0, 1);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (6, 'www.google.com/search', '2023-07-17 17:35:26.256000', 0, 1);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (2, 'www.google.com/search', '2023-07-17 17:37:22.538000', 3, 1);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (7, 'dddd', '2023-07-17 22:48:00.237000', 0, 9);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (8, 'www.google.com/search', '2023-07-17 22:48:15.672000', 0, 9);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (9, 'www.google.com/search', '2023-07-17 22:48:16.727000', 0, 9);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (10, 'www.appurl.com/', '2023-07-24 23:08:36.005000', 0, 15);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (11, 'github.com/', '2023-07-24 23:08:55.988000', 0, 15);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (12, 'ozimmer.ch/', '2023-07-24 23:09:08.305000', 0, 15);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (13, 'www.speedtest.net/', '2023-07-24 23:10:06.130000', 0, 14);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (14, 'www.springer.com/', '2023-07-24 23:10:28.512000', 0, 14);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (15, 'www.google.com/', '2023-07-24 23:10:59.958000', 0, 12);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (16, 'translate.google.com/', '2023-07-24 23:11:20.542000', 0, 12);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (17, 'mail.google.com/', '2023-07-24 23:11:34.557000', 0, 12);
+INSERT INTO public.links (id, longlink, updatedat, viewcount, fk_user_id) VALUES (18, 'maps.google.com/', '2023-07-24 23:11:46.574000', 0, 12);
