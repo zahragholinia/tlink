@@ -202,7 +202,6 @@ Once the application is running, the available REST endpoints can be explored th
 
 * Java
 * Spring Boot
-* Spring Web
 * Spring Security
 * Spring Data JPA
 
