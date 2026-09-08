@@ -4,7 +4,7 @@ A URL shortening service built with **Java** and **Spring Boot**.
 
 The project provides a backend for creating, managing, and redirecting shortened URLs, with authentication, link expiration, view tracking, and PostgreSQL persistence.
 
-## What This Project Demonstrates
+## What This Project Demonstrates:
 
 * RESTful backend API design
 * URL shortening using **Base62 encoding**
